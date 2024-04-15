@@ -7,7 +7,8 @@ For my Master's degree. Maily to save all yaml files for Kubernetes deployments.
 
 
 
-## Deploy Kubernetes 1.28.8
+## Deploy Kubernetes 1.28.6
+This version of Kubernetes is chosen due to compatibility with Kubespray.
 There will be 4 VMs with [Ubuntu 20.04.04 LTS](https://ubuntu.com/download/desktop/thank-you?version=22.04.4&architecture=amd64) created on VirtualBox:
 - 1 master
   - mgr-k8s-master-01
