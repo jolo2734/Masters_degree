@@ -7,16 +7,16 @@ For my Master's degree. Maily to save all yaml files for Kubernetes deployments.
 
 (In my master work I won't take into account the security settings of deployed application inside the cluster, only setting of cluster(networking, access, privileges, ...) and host(access from pods to host layer))
 ## Tasks
-- [ ] deploy 5 hosts
-- [ ] deploy k8s cluster on these hosts
+- [ ] deploy 5 hosts(4 for cluster, 1 for monitoring)
+- [ ] deploy k8s cluster
 - [ ] harden cluster
 - [ ] harden hosts
-- [ ] deploy applications to generate some traffic
-- [ ] deploy monitoring of these applications
+- [ ] deploy applications
+- [ ] deploy monitoring for these applications
 - [ ] prepare attacks at cluster
 - [ ] prepare auto-defense mechanisms
 
-### Deploy 4 hosts
+### Deploy cluster hosts
 There will be 4 VMs with [Ubuntu 20.04.04 LTS](https://ubuntu.com/download/desktop/thank-you?version=22.04.4&architecture=amd64) created on VirtualBox:
 - 1 master
   - mgr-k8s-master-01(1 vCPU, 8GB RAM)
@@ -49,10 +49,8 @@ Monitoring stack:
 - Prometheus
 - Grafana
 
-
-
 ### Attacks
-- 
+- [something will be here]
 
 ### Auto-defense mechanisms
 - based on monitoring
