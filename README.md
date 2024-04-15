@@ -18,13 +18,23 @@ For my Master's degree. Maily to save all yaml files for Kubernetes deployments.
 - [ ] compare k8s with other container orchestrator
 
 ### Deploy cluster hosts
-There will be 4 VMs with [Ubuntu 20.04.04 LTS](https://ubuntu.com/download/desktop/thank-you?version=22.04.4&architecture=amd64) created on VirtualBox:
+There will be 4 hosts with [Ubuntu 20.04.04 LTS](https://ubuntu.com/download/desktop/thank-you?version=22.04.4&architecture=amd64) created on VirtualBox:
 - 1 master
   - mgr-k8s-master-01(1 vCPU, 8GB RAM)
 - 3 workers
   - mgr-k8s-worker-01(1 vCPU, 8GB RAM)
   - mgr-k8s-worker-02(1 vCPU, 8GB RAM)
   - mgr-k8s-worker-03(1 vCPU, 8GB RAM)
+
+For monitoring and managing purposes will be deployed separate, not hardened, host:
+- manage-and-monitor(1 vCPU, 8GB RAM)
+
+Hosts configuration:
+- [X] set nat network
+- [X] ssh configs for ansible
+- [x] set guest configurations
+- [X] set static ip
+- [ ] add 100GB drive per worker
 
 After each task VMs will be snapshoted to preserve working configuration states, also will ba backed up on another disc.
 ### Deploy Kubernetes 1.28.6
@@ -44,9 +54,6 @@ Additional hardening need to be done regarding access from pods to host machine.
  - other service?
 
 ### Deploy monitoring of these applications
-For monitoring and managing purposes will be deployed separate, not hardened, host:
-- manage-and-monitor(1 vCPU, 8GB RAM)
-
 Monitoring stack:
 - Prometheus
 - Grafana
