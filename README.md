@@ -18,7 +18,7 @@ For my Master's degree. Maily to save all yaml files for Kubernetes deployments.
 - [ ] compare k8s with other container orchestrator
 
 ### Deploy cluster hosts
-There will be 4 hosts with [Ubuntu 20.04.04 LTS](https://ubuntu.com/download/desktop/thank-you?version=22.04.4&architecture=amd64) created on VirtualBox:
+There will be 4 VMs with [Ubuntu 20.04.04 LTS](https://ubuntu.com/download/desktop/thank-you?version=22.04.4&architecture=amd64) created on VirtualBox:
 - 1 master
   - mgr-k8s-master-01(1 vCPU, 8GB RAM)
 - 3 workers
