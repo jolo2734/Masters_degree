@@ -17,8 +17,8 @@ For my Master's degree. Maily to save all yaml files for Kubernetes deployments.
 - [ ] prepare auto-defense mechanisms
 - [ ] compare k8s with other container orchestrator
 
-### Deploy cluster hosts
-There will be 4 VMs with [Ubuntu 20.04.04 LTS](https://ubuntu.com/download/desktop/thank-you?version=22.04.4&architecture=amd64) created on VirtualBox:
+### Deploy hosts
+For k8s cluster there will be 4 VMs with [Ubuntu 20.04.04 LTS](https://ubuntu.com/download/desktop/thank-you?version=22.04.4&architecture=amd64) created on VirtualBox:
 - 1 master
   - mgr-k8s-master-01(1 vCPU, 8GB RAM)
 - 3 workers
@@ -26,7 +26,7 @@ There will be 4 VMs with [Ubuntu 20.04.04 LTS](https://ubuntu.com/download/deskt
   - mgr-k8s-worker-02(1 vCPU, 8GB RAM)
   - mgr-k8s-worker-03(1 vCPU, 8GB RAM)
 
-For monitoring and managing purposes will be deployed separate, not hardened, host:
+For monitoring and managing purposes will be deployed separate, not hardened, VM:
 - manage-and-monitor(1 vCPU, 8GB RAM)
 
 Hosts configuration:
