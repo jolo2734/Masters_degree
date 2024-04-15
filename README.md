@@ -15,6 +15,7 @@ For my Master's degree. Maily to save all yaml files for Kubernetes deployments.
 - [ ] deploy monitoring for these applications
 - [ ] prepare attacks at cluster
 - [ ] prepare auto-defense mechanisms
+- [ ] compare k8s with other container orchestrator
 
 ### Deploy cluster hosts
 There will be 4 VMs with [Ubuntu 20.04.04 LTS](https://ubuntu.com/download/desktop/thank-you?version=22.04.4&architecture=amd64) created on VirtualBox:
