@@ -1,0 +1,49 @@
+---
+- name: Set up DevStack on remote host
+  hosts: all
+  become: yes
+  vars:
+    local_config_src: "~/devstack-configs/single-interface.rc"
+    remote_config_dest: "~/devstack/local.conf"
+    repo_url: "https://opendev.org/openstack/devstack"
+    repo_dest: "~/devstack"
+    ansible_user: stack
+  
+  tasks:
+    - name: Install git and other necessary packages
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - git
+        - python3-pip
+        - libffi-dev
+        - python3-dev
+        - python3-venv
+        - libssl-dev
+        - ipcalc
+      when: ansible_os_family == "Debian"
+
+    - name: Clone DevStack repository
+      git:
+        repo: "{{ repo_url }}"
+        dest: "{{ repo_dest }}"
+        clone: yes
+        update: yes
+      become: no  # Git clone as the default user, not root
+
+    - name: Copy the local.conf configuration file
+      copy:
+        src: "{{ local_config_src }}"
+        dest: "{{ remote_config_dest }}"
+        mode: '0644'
+      become: no  # Ensure the file is owned by the default user
+
+        #    - name: Run stack.sh from DevStack
+        #      command: "{{ repo_dest }}/stack.sh"
+        #      args:
+        #        chdir: "{{ repo_dest }}"
+        #      become: no  # Execute script as the default user
+        #      environment:
+        #        HOME: "/home/{{ ansible_user }}"
+

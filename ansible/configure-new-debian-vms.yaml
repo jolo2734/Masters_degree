@@ -1,0 +1,51 @@
+---
+- name: Update and Install Utilities Playbook
+  hosts: all
+  become: yes
+  tasks:
+    - name: Update and upgrade apt packages
+      apt:
+        update_cache: yes
+        upgrade: yes
+        cache_valid_time: 86400 # Cache valid for 24 hours
+
+    - name: Install net-tools for ifconfig
+      apt:
+        name: net-tools
+        state: present
+
+    - name: Install development tools and headers
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - build-essential
+        - "linux-headers-{{ ansible_kernel }}"
+
+    - name: Mount the CDROM
+      mount:
+        path: /media
+        src: /dev/cdrom
+        fstype: auto
+        opts: ro
+        state: mounted
+
+    - name: Execute VBoxLinuxAdditions.run
+      command: /media/VBoxLinuxAdditions.run
+      args:
+        chdir: /media
+        creates: /opt/VBoxGuestAdditions-*/lib/VBoxGuestAdditions
+      ignore_errors: yes
+      async: 130
+      poll: 15
+
+    - name: Reboot the machine
+      reboot:
+        msg: "Rebooting for changes to take effect"
+        connect_timeout: 5
+        reboot_timeout: 300
+        pre_reboot_delay: 0
+        post_reboot_delay: 0
+        test_command: uptime
+
+

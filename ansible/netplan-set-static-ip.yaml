@@ -1,0 +1,58 @@
+---
+- name: Set Static IP Address to Current DHCP Address
+  hosts: all
+  become: yes
+  gather_facts: yes
+
+  tasks:
+    - name: Gather network facts  # Ensure detailed network facts are collected
+      setup:
+        gather_subset:
+          - network
+
+    - name: Extract the primary interface name
+      set_fact:
+        primary_interface: "{{ ansible_facts['default_ipv4']['interface'] }}"
+
+    - name: Extract the current IP address
+      set_fact:
+        current_ip: "{{ ansible_facts['default_ipv4']['address'] }}"
+
+    - name: Extract the netmask as prefix
+      set_fact:
+        netmask_prefix: "{{ ansible_facts['default_ipv4']['netmask'] | ipaddr('prefix') }}"
+
+    - name: Correct netmask prefix if necessary
+      set_fact:
+        netmask_prefix: 24
+      when: netmask_prefix == "32"  # Ensures that /32 is corrected to /24
+
+    - name: Extract the default gateway
+      set_fact:
+        gateway: "{{ ansible_facts['default_ipv4']['gateway'] }}"
+
+    - name: Set Google DNS servers
+      set_fact:
+        nameservers: ['10.0.2.1', '8.8.8.8', '8.8.4.4']
+
+    - name: Prepare the Netplan configuration to set a static IP
+      copy:
+        dest: "/etc/netplan/01-netcfg.yaml"
+        content: |
+          network:
+            version: 2
+            renderer: networkd
+            ethernets:
+              {{ primary_interface }}:
+                dhcp4: no
+                dhcp6: no
+                addresses:
+                  - {{ current_ip }}/{{ netmask_prefix }}
+                gateway4: {{ gateway }}
+                nameservers:
+                    addresses: {{ nameservers }}
+        backup: yes
+
+    - name: Apply the Netplan configuration
+      command: netplan apply
+
