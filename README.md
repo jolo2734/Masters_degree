@@ -3,7 +3,7 @@ For my Master's degree. Maily to save all yaml files for Kubernetes deployments.
 
 ### Description:
 - Part 1. Plan is to deploy secure Kubernetes cluster with automatic security features like active network policy with monitoring(probably Prometheus+Grafana)
-- Part 2. Compare Kubernetes security features/capabilities with DockerSwarm security features/capabilities.
+- Part 2. Compare Kubernetes security features/capabilities with DockerSwarm/other security features/capabilities.
 
 (In my master work I won't take into account the security settings of deployed application inside the cluster, only setting of cluster(networking, access, privileges, ...) and host(access from pods to host layer))
 ## Tasks
