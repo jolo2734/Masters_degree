@@ -11,13 +11,11 @@ For my Master's degree. Maily to save all yaml files for Kubernetes deployments.
 - [ ] harden cluster
 - [ ] harden hosts
 - [ ] deploy applications to generate some traffic
-- [ ] deploy monitoring
-- [ ] prepare attacks
+- [ ] deploy monitoring of these applications
+- [ ] prepare attacks at cluster
 - [ ] prepare auto-defense mechanisms
 
-### Deploy Kubernetes 1.28.6
-This version of Kubernetes is chosen due to compatibility with Kubespray.
-
+### Deploy 4 hosts
 There will be 4 VMs with [Ubuntu 20.04.04 LTS](https://ubuntu.com/download/desktop/thank-you?version=22.04.4&architecture=amd64) created on VirtualBox:
 - 1 master
   - mgr-k8s-master-01
@@ -26,11 +24,21 @@ There will be 4 VMs with [Ubuntu 20.04.04 LTS](https://ubuntu.com/download/deskt
   - mgr-k8s-worker-02
   - mgr-k8s-worker-03
 
+### Deploy Kubernetes 1.28.6
+This version of Kubernetes is chosen due to compatibility with Kubespray.
+
 Kubernetes will be deployed by [Kubespray v2.24.1](https://github.com/kubernetes-sigs/kubespray/tree/v2.24.1).
 
-
-### Hosts basic configuration
+### Cluster hardening
 
 ### Host hardening
+
+### Deploy some applications
+
+### Deploy monitoring of these applications
+
+### Attacks
+
+### Auto-defense mechanisms
 
 
