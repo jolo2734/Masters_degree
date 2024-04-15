@@ -26,6 +26,7 @@ There will be 4 VMs with [Ubuntu 20.04.04 LTS](https://ubuntu.com/download/deskt
   - mgr-k8s-worker-02(1 vCPU, 8GB RAM)
   - mgr-k8s-worker-03(1 vCPU, 8GB RAM)
 
+After each task VMs will be snapshoted to preserve working configuration states, also will ba backed up on another disc.
 ### Deploy Kubernetes 1.28.6
 This version of Kubernetes is chosen due to compatibility with Kubespray.
 
