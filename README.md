@@ -8,9 +8,9 @@ For my Master's degree. Maily to save all yaml files for Kubernetes deployments.
 (In my master work I won't take into account the security settings of deployed application inside the cluster, only setting of cluster(networking, access, privileges, ...) and host(access from pods to host layer))
 ## Tasks
 - [x] deploy 5 hosts(4 for cluster, 1 for monitoring)
-- [ ] deploy k8s cluster
-- [ ] harden cluster
 - [ ] harden hosts
+- [ ] prepare cluster hardening
+- [ ] deploy hardened k8s cluster
 - [ ] deploy applications
 - [ ] deploy monitoring for these applications
 - [ ] prepare attacks at cluster
