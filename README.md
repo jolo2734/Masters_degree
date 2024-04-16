@@ -1,5 +1,6 @@
 # Masters_degree
 For my Master's degree. Maily to save all yaml files for Kubernetes deployments. Maybe for IaaC.
+Everything apart from deploying VMS will be automatic.
 
 ### Description:
 - Part 1. Plan is to deploy secure Kubernetes cluster with automatic security features like active network policy with monitoring(probably Prometheus+Grafana)
