@@ -1,0 +1,69 @@
+---
+- name: Configure Ubuntu Security on Ubuntu 20
+  hosts: all
+  become: yes
+  vars:
+    ua_token: C142xkUTYshqWqn7S9LiwcJWfjrA2C
+
+  tasks:
+    - name: Update all packages
+      ansible.builtin.apt:
+        update_cache: yes
+        cache_valid_time: 86400  # 24 hours
+
+    - name: Install ubuntu-advantage-tools and ubuntu-pro-client
+      ansible.builtin.apt:
+        name:
+          - ubuntu-advantage-tools
+          - ubuntu-pro-client
+        state: present
+
+    - name: Attach the UA token
+      ansible.builtin.command:
+        cmd: ua attach {{ ua_token }}
+      when: ua_token != "your_ua_token_here"
+      ignore_errors: yes
+
+    - name: Enable USG (Ubuntu Security Guide) services with UA
+      ansible.builtin.command:
+        cmd: ua enable usg
+      register: ua_enable_output
+      failed_when: "'enabled' not in ua_enable_output.stdout"
+
+    - name: Install USG package
+      ansible.builtin.apt:
+        name: usg
+        state: present
+
+    - name: Audit system with USG CIS Level 1 Server profile
+      ansible.builtin.shell:
+        cmd: usg audit cis_level1_server
+      register: usg_audit_output
+
+    - name: Apply USG fixes
+      ansible.builtin.shell:
+        cmd: usg fix cis_level1_server
+      when: "'No issues found' not in usg_audit_output.stdout"
+
+    - name: Show USG Audit Output
+      ansible.builtin.debug:
+        msg: "{{ usg_audit_output.stdout }}"
+
+    - name: Reboot the server
+      ansible.builtin.reboot:
+        msg: "Rebooting for changes to take effect"
+        connect_timeout: 5
+        reboot_timeout: 600
+        pre_reboot_delay: 0
+        post_reboot_delay: 30
+        test_command: whoami
+
+    - name: Re-run Audit after reboot
+      ansible.builtin.shell:
+        cmd: usg audit cis_level1_server
+      register: usg_re_audit_output
+
+    - name: Show Re-run Audit Output
+      ansible.builtin.debug:
+        msg: "{{ usg_re_audit_output.stdout }}"
+
