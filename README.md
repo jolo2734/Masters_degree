@@ -7,7 +7,7 @@ For my Master's degree. Maily to save all yaml files for Kubernetes deployments.
 
 (In my master work I won't take into account the security settings of deployed application inside the cluster, only setting of cluster(networking, access, privileges, ...) and host(access from pods to host layer))
 ## Tasks
-- [ ] deploy 5 hosts(4 for cluster, 1 for monitoring)
+- [x] deploy 5 hosts(4 for cluster, 1 for monitoring)
 - [ ] deploy k8s cluster
 - [ ] harden cluster
 - [ ] harden hosts
@@ -34,7 +34,7 @@ Hosts configuration:
 - [X] ssh configs for ansible
 - [x] set guest configurations
 - [X] set static ip
-- [ ] add 100GB drive per worker
+- [x] add 100GB drive per worker
 
 After each task VMs will be snapshoted to preserve working configuration states, also will ba backed up on another disc.
 ### Deploy Kubernetes 1.28.6
