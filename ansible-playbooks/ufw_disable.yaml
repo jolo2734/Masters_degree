@@ -1,0 +1,17 @@
+---
+- name: Disable UFW Firewall
+  hosts: all
+  become: yes
+  tasks:
+    - name: Stop UFW service
+      ansible.builtin.systemd:
+        name: ufw
+        state: stopped
+        enabled: no
+      ignore_errors: yes
+
+    - name: Disable UFW on boot
+      ansible.builtin.command:
+        cmd: ufw disable
+      ignore_errors: yes
+
