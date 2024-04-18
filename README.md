@@ -11,7 +11,7 @@ Everything apart from deploying VMS will be automated by ansible or by bash scri
 ## Tasks
 - [x] deploy 4/5 hosts(4 for cluster)((optional)1 for monitoring)
 - [ ] (optional)audit hosts with CIS Benchmark [TODO]manual [DONE]automatic
-- [ ] deploy k8s cluster
+- [x] deploy k8s cluster
 - [ ] scan k8s cluster
 - [ ] (optional)harden hosts according to audit results [TODO]manual [DONE]automatic
 - [ ] prepare automation for cluster hardening
