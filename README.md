@@ -1,5 +1,5 @@
 # Masters_degree
-For my Master's degree. Maily to save all yaml files for Kubernetes deployments. Maybe for IaaC.
+For my Master's degree: "Analiza podatności i automatyzacja bezpieczeństwa w klastrach Kubernetes"/"Vulnerability analysis and security automation in Kubernetes clusters". Maily to save all yaml files for Kubernetes deployments. Maybe for IaaC.
 
 Everything apart from deploying VMS will be automated by ansible or by bash scripts.
 
@@ -9,15 +9,18 @@ Everything apart from deploying VMS will be automated by ansible or by bash scri
 
 (In my master work I won't take into account the security settings of deployed application inside the cluster, only setting of cluster(networking, access, privileges, ...) and host(access from pods to host layer))
 ## Tasks
-- [x] deploy 5 hosts(4 for cluster, 1 for monitoring)
-- [x] harden hosts
-- [ ] prepare cluster hardening
+- [x] deploy 4/5 hosts(4 for cluster)((optional)1 for monitoring)
+- [ ] (optional)audit hosts with CIS Benchmark [TODO]manual [DONE]automatic
+- [ ] deploy k8s cluster
+- [ ] scan k8s cluster
+- [ ] (optional)harden hosts according to audit results [TODO]manual [DONE]automatic
+- [ ] prepare automation for cluster hardening
 - [ ] deploy hardened k8s cluster
-- [ ] deploy applications
-- [ ] deploy monitoring for these applications
-- [ ] prepare attacks at cluster
-- [ ] prepare auto-defense mechanisms
-- [ ] compare k8s with other container orchestrator
+- [ ] (optional)deploy applications
+- [ ] (optional)deploy monitoring for these applications
+- [ ] (optional)prepare attacks at cluster
+- [ ] (optional)prepare auto-defense mechanisms
+- [ ] (optional)compare k8s with other container orchestrator
 
 ### Deploy hosts
 For k8s cluster there will be 4 VMs with [Ubuntu 20.04.04 LTS](https://ubuntu.com/download/desktop/thank-you?version=22.04.4&architecture=amd64) created on VirtualBox:
