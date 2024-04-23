@@ -1,16 +1,29 @@
-from flask import Flask, request, jsonify
+import os
+from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from elasticsearch import Elasticsearch
 
 app = Flask(__name__)
 
-# Konfiguracja dla PostgreSQL
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://myuser:mypassword@postgres/mydatabase'
+# Environment variables for Elasticsearch
+es_host = os.getenv('ELASTICSEARCH_HOST', 'elasticsearch')
+es_port = os.getenv('ELASTICSEARCH_PORT', '9200')
+es_password = os.getenv('ELASTICSEARCH_PASSWORD', 'example')
+
+# Environment variables for PostgreSQL
+pg_user = os.getenv('POSTGRES_USER', 'user')
+pg_password = os.getenv('POSTGRES_PASSWORD', 'password')
+pg_db = os.getenv('POSTGRES_DB', 'mydatabase')
+pg_host = os.getenv('POSTGRES_HOST', 'postgres')
+pg_port = os.getenv('POSTGRES_PORT', '5432')
+
+# Configure SQLAlchemy for PostgreSQL
+app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{pg_user}:{pg_password}@{pg_host}:{pg_port}/{pg_db}'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-# Konfiguracja dla Elasticsearch
-es = Elasticsearch(['http://elasticsearch:9200'])
+# Configure Elasticsearch client
+es = Elasticsearch([{'host': es_host, 'port': es_port}], http_auth=('elastic', es_password))
 
 class Record(db.Model):
     id = db.Column(db.Integer, primary_key=True)

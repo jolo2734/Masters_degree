@@ -1,0 +1,16 @@
+#Build paczki z app.py
+"pip install -r requirements.txt"
+"docker build -t flask-app:v1.X ." - jesli w folderze z dockerfilem
+"docker tag flask-app:v1.X localhost:5000/flask-app:v1.X"
+
+#crictl
+"sudo crictl pull 10.0.2.4:5000/flask-app:v1.X" - przedtem skonfirugowac /etc/containerd/config.toml dodajac na koncu:
+"
+        [plugins."io.containerd.grpc.v1.cri".registry.mirrors."10.0.2.4:5000"]
+          endpoint = ["http://10.0.2.4:5000"]
+"
+
+#setup postgresa
+CREATE DATABASE flask_app;
+CREATE USER app_user WITH ENCRYPTED PASSWORD 'password';
+GRANT ALL PRIVILEGES ON DATABASE flask_app TO app_user;
