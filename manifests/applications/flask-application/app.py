@@ -1,9 +1,14 @@
 import os
-from flask import Flask, jsonify
+import sys
+from flask import Flask, jsonify, request, Response
 from flask_sqlalchemy import SQLAlchemy
 from elasticsearch import Elasticsearch
+import logging
 
 app = Flask(__name__)
+
+# Set the logging level to DEBUG
+logging.basicConfig(level=logging.DEBUG)
 
 # Environment variables for Elasticsearch
 es_host = os.getenv('ELASTICSEARCH_HOST', 'elasticsearch')
@@ -22,10 +27,14 @@ app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{pg_user}:{pg_password}@{
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
+# Convert port from string to integer
+es_port = int(es_port)
+
 # Configure Elasticsearch client
-es = Elasticsearch([{'host': es_host, 'port': es_port}], http_auth=('elastic', es_password))
+es = Elasticsearch([{'host': es_host, 'port': es_port, 'scheme': 'http'}], http_auth=('elastic', es_password))
 
 class Record(db.Model):
+    __tablename__ = 'records'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
     description = db.Column(db.String(120), nullable=False)
@@ -54,13 +63,17 @@ def index():
 
 @app.route('/add', methods=['POST'])
 def add_data():
-    name = request.json['name']
-    description = request.json['description']
-    record = Record(name=name, description=description)
-    db.session.add(record)
-    db.session.commit()
-    es.index(index='records', doc_type='record', id=record.id, body={'name': name, 'description': description})
-    return jsonify({'id': record.id, 'name': name, 'description': description}), 201
+    try:
+        name = request.form['name']
+        description = request.form['description']
+        record = Record(name=name, description=description)
+        db.session.add(record)
+        db.session.commit()
+        es.index(index='records', doc_type='record', id=record.id, body={'name': name, 'description': description})
+        return jsonify({'status': 'success', 'name': name, 'description': description})
+    except Exception as e:
+        print(e, file=sys.stderr)
+        return Response("Error processing request", status=500)
 
 @app.route('/search', methods=['GET'])
 def search():
@@ -69,4 +82,6 @@ def search():
     return jsonify([hit['_source'] for hit in res['hits']['hits']]), 200
 
 if __name__ == '__main__':
+    with app.app_context():
+        db.create_all()
     app.run(host='0.0.0.0', port=5000)
