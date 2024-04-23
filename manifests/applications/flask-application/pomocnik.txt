@@ -14,3 +14,5 @@
 CREATE DATABASE flask_app;
 CREATE USER app_user WITH ENCRYPTED PASSWORD 'password';
 GRANT ALL PRIVILEGES ON DATABASE flask_app TO app_user;
+
+#stworzyć secret o nazwie jak w pliku app.yaml

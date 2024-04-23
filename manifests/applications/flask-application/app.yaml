@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flask-app
+  template:
+    metadata:
+      labels:
+        app: flask-app
+    spec:
+      containers:
+        - name: flask-app
+          image: 10.0.2.4:5000/my-flask-app:v1.1
+          ports:
+            - containerPort: 5000
+          env:
+            - name: ELASTICSEARCH_HOST
+              value: "elasticsearch-es-http"
+            - name: ELASTICSEARCH_PORT
+              value: "9200"
+            - name: ELASTICSEARCH_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: elasticsearch-es-elastic-user
+                  key: elastic
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: app-user.db-postgresql.credentials.postgresql.acid.zalan.do
+                  key: username
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-user.db-postgresql.credentials.postgresql.acid.zalan.do
+                  key: password
+            - name: POSTGRES_DB
+              value: "flask_app"
+            - name: POSTGRES_HOST
+              value: "db-postgresql" # Assuming you have a service named 'postgresql-service'
+            - name: POSTGRES_PORT
+              value: "5432"
