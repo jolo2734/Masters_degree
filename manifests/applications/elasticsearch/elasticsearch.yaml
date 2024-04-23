@@ -1,0 +1,61 @@
+#firstly install operator with:
+#kubectl create -f https://download.elastic.co/downloads/eck/2.12.1/crds.yaml
+#kubectl apply -f https://download.elastic.co/downloads/eck/2.12.1/operator.yaml
+#then set "vm.max_map_count" in file "/etc/sysctl.conf" to "262144", save, and: "sudo sysctl -p"
+---
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+  name: elasticsearch
+  namespace: default
+spec:
+  version: "8.13.0"
+  nodeSets:
+    - name: master
+      count: 1
+      config:
+        node.roles: ["master"]
+      podTemplate:
+        spec:
+          containers:
+            - name: elasticsearch
+              resources:
+                limits:
+                  memory: 2Gi
+                  cpu: 200m
+                requests:
+                  memory: 2Gi
+                  cpu: 200m
+      volumeClaimTemplates:
+        - metadata:
+            name: elasticsearch-data
+          spec:
+            accessModes: ["ReadWriteOnce"]
+            resources:
+              requests:
+                storage: 10Gi
+            storageClassName: "local-storage-elasticsearch-master"
+    - name: data
+      count: 1
+      config:
+        node.roles: ["data"]
+      podTemplate:
+        spec:
+          containers:
+            - name: elasticsearch
+              resources:
+                limits:
+                  memory: 4Gi
+                  cpu: 200m
+                requests:
+                  memory: 2Gi
+                  cpu: 200m
+      volumeClaimTemplates:
+        - metadata:
+            name: elasticsearch-data
+          spec:
+            accessModes: ["ReadWriteOnce"]
+            resources:
+              requests:
+                storage: 20Gi
+            storageClassName: "local-storage-elasticsearch-data"
