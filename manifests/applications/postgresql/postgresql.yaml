@@ -1,4 +1,4 @@
-#firstly install zalando-postgres-operator
+#firstly install zalando-postgres-operator: kubectl apply -k github.com/zalando/postgres-operator/manifests
 kind: "postgresql"
 apiVersion: "acid.zalan.do/v1"
 metadata:
