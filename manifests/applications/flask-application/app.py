@@ -81,6 +81,14 @@ def search():
     res = es.search(index="records", body={"query": {"match": {"description": query}}})
     return jsonify([hit['_source'] for hit in res['hits']['hits']]), 200
 
+@app.route('/test-db')
+def test_db():
+    try:
+        db.session.execute('SELECT 1')
+        return 'Database connection OK'
+    except Exception as e:
+        return str(e), 500
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
