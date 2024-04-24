@@ -69,7 +69,7 @@ def add_data():
         record = Record(name=name, description=description)
         db.session.add(record)
         db.session.commit()
-        es.index(index='records', doc_type='record', id=record.id, body={'name': name, 'description': description})
+        es.index(index='records', id=record.id, body={'name': name, 'description': description})
         return jsonify({'status': 'success', 'name': name, 'description': description})
     except Exception as e:
         print(e, file=sys.stderr)
