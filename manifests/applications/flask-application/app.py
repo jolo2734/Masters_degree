@@ -81,6 +81,11 @@ def search():
     res = es.search(index="records", body={"query": {"match": {"description": query}}})
     return jsonify([hit['_source'] for hit in res['hits']['hits']]), 200
 
+@app.route('/list')
+def list_records():
+    records = Record.query.all()
+    return jsonify([{'name': record.name, 'description': record.description} for record in records])
+
 @app.route('/test-db')
 def test_db():
     try:
