@@ -1,0 +1,51 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: elasticsearch-pods
+  namespace: default
+spec:
+  egress:
+    - ports:
+        - port: 9300
+          protocol: TCP
+      to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: default
+          podSelector:
+            matchLabels:
+              common.k8s.elastic.co/type: elasticsearch
+    - ports:
+        - port: 53
+          protocol: UDP
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              eck.k8s.elastic.co/operator-name: elastic-operator
+          podSelector:
+            matchLabels:
+              control-plane: elastic-operator
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: default
+      # [Optional] Allow ingress controller pods from the ingress-nginx namespace.
+      #- namespaceSelector:
+      #    matchLabels:
+      #      name: ingress-nginx
+      ports:
+        - port: 9200
+          protocol: TCP
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: default
+          podSelector:
+            matchLabels:
+              common.k8s.elastic.co/type: elasticsearch
+      ports:
+        - port: 9300
+          protocol: TCP
+  podSelector:
+    matchLabels:
+      common.k8s.elastic.co/type: elasticsearch
