@@ -9,16 +9,16 @@ Everything apart from deploying VMS will be automated by ansible or by bash scri
 
 (In my master work I won't take into account the security settings of deployed application inside the cluster, only setting of cluster(networking, access, privileges, ...) and host(access from pods to host layer))
 ## Tasks
-- [x] deploy 4/5 hosts(4 for cluster)((optional)1 for monitoring)
-- [ ] (optional)audit hosts with CIS Benchmark [TODO]manual [DONE]automatic
+- [x] deploy 4 hosts for k8s cluster
 - [x] deploy k8s cluster
-- [ ] deploy application and generate traffic
+- [x] deploy application and generate traffic
+- [x] configure network policy(done for elasticsearch)
+- [ ] configure Pod Security Admission
+- [ ] configure RBAC
 - [ ] scan k8s cluster(misconfiguration - kube-bench, vulnerabilities - kube-hunter)
-- [ ] (optional)harden hosts according to audit results [TODO]manual [DONE]automatic
+- [ ] (optional)audit and harden hosts according to audit results [TODO]manual [DONE]automatic
 - [ ] prepare automation for cluster hardening
-- [ ] deploy hardened k8s cluster
-- [ ] deploy applications
-- [ ] deploy monitoring for these applications
+- [ ] (optional)deploy hardened k8s cluster
 - [ ] prepare attacks at cluster
 - [ ] prepare auto-defense mechanisms
 - [ ] compare k8s with other container orchestrator

@@ -1,0 +1,11 @@
+apiVersion: audit.k8s.io/v1
+kind: Policy
+rules:
+  - level: RequestResponse  # Loguj tworzenie i edycje podow na poziomie "RequestResponse"
+    resources:
+      - group: ""
+        resources: ["pods"]
+    verbs: ["create", "update"]
+  - level: Metadata # Loguj zdarzenia "admission" na poziomie "Metadata"
+    resources:
+      - group: "admission.k8s.io"
