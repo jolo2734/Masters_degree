@@ -1,0 +1,36 @@
+
+
+apiVersion: audit.k8s.io/v1
+kind: Policy
+rules:
+  - level: RequestResponse  # Loguj tworzenie i edycje podow na poziomie "RequestResponse"
+    resources:
+      - group: ""
+        resources: ["pods"]
+    verbs: ["create", "update"]
+  - level: Metadata # Loguj zdarzenia "admission" na poziomie "Metadata"
+    resources:
+      - group: "admission.k8s.io"
+
+#  Następnie w pliku /etc/kubernetes/manifests/kube-apiserver.yaml dodałem następujące linie:
+#    - --audit-policy-file=/etc/kubernetes/audit-policy.yaml
+#    - --audit-log-path=/var/log/kubernetes/audit/audit.log
+#    - --audit-log-maxage=30
+#    - --audit-log-maxbackup=3
+#    - --audit-log-maxsize=100
+#
+#    - mountPath: /etc/kubernetes/audit-policy.yaml
+#      name: audit
+#      readOnly: true
+#    - mountPath: /var/log/kubernetes/audit/
+#      name: audit-log
+#      readOnly: false
+#
+#  - hostPath:
+#      path: /etc/kubernetes/audit-policy.yaml
+#      type: File
+#    name: audit
+#  - hostPath:
+#      path: /var/log/kubernetes/audit/
+#      type: DirectoryOrCreate
+#    name: audit-log
