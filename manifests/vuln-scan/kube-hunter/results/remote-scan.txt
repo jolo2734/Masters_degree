@@ -1,0 +1,70 @@
+
+Nodes
++-------------+-----------+
+| TYPE        | LOCATION  |
++-------------+-----------+
+| Node/Master | 10.0.2.15 |
++-------------+-----------+
+| Node/Master | 10.0.2.8  |
++-------------+-----------+
+| Node/Master | 10.0.2.7  |
++-------------+-----------+
+| Node/Master | 10.0.2.6  |
++-------------+-----------+
+
+Detected Services
++-------------+-----------------+----------------------+
+| SERVICE     | LOCATION        | DESCRIPTION          |
++-------------+-----------------+----------------------+
+| Kubelet API | 10.0.2.8:10250  | The Kubelet is the   |
+|             |                 | main component in    |
+|             |                 | every Node, all pod  |
+|             |                 | operations goes      |
+|             |                 | through the kubelet  |
++-------------+-----------------+----------------------+
+| Kubelet API | 10.0.2.7:10250  | The Kubelet is the   |
+|             |                 | main component in    |
+|             |                 | every Node, all pod  |
+|             |                 | operations goes      |
+|             |                 | through the kubelet  |
++-------------+-----------------+----------------------+
+| Kubelet API | 10.0.2.6:10250  | The Kubelet is the   |
+|             |                 | main component in    |
+|             |                 | every Node, all pod  |
+|             |                 | operations goes      |
+|             |                 | through the kubelet  |
++-------------+-----------------+----------------------+
+| Kubelet API | 10.0.2.15:10250 | The Kubelet is the   |
+|             |                 | main component in    |
+|             |                 | every Node, all pod  |
+|             |                 | operations goes      |
+|             |                 | through the kubelet  |
++-------------+-----------------+----------------------+
+| Etcd        | 10.0.2.15:2379  | Etcd is a DB that    |
+|             |                 | stores cluster's     |
+|             |                 | data, it contains    |
+|             |                 | configuration and    |
+|             |                 | current              |
+|             |                 |     state            |
+|             |                 | information, and     |
+|             |                 | might contain        |
+|             |                 | secrets              |
++-------------+-----------------+----------------------+
+| API Server  | 10.0.2.15:6443  | The API server is in |
+|             |                 | charge of all        |
+|             |                 | operations on the    |
+|             |                 | cluster.             |
++-------------+-----------------+----------------------+
+
+Vulnerabilities
+For further information about a vulnerability, search its ID in: 
+https://avd.aquasec.com/
++--------+----------------+----------------------+----------------------+----------------------+----------+
+| ID     | LOCATION       | MITRE CATEGORY       | VULNERABILITY        | DESCRIPTION          | EVIDENCE |
++--------+----------------+----------------------+----------------------+----------------------+----------+
+| KHV002 | 10.0.2.15:6443 | Initial Access //    | K8s Version          | The kubernetes       | v1.28.6  |
+|        |                | Exposed sensitive    | Disclosure           | version could be     |          |
+|        |                | interfaces           |                      | obtained from the    |          |
+|        |                |                      |                      | /version endpoint    |          |
++--------+----------------+----------------------+----------------------+----------------------+----------+
+
