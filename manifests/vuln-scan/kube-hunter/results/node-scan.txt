@@ -1,0 +1,137 @@
+Nodes
++-------------+----------------+
+| TYPE        | LOCATION       |
++-------------+----------------+
+| Node/Master | 169.254.25.10  |
++-------------+----------------+
+| Node/Master | 10.233.112.128 |
++-------------+----------------+
+| Node/Master | 10.233.6.42    |
++-------------+----------------+
+| Node/Master | 10.233.0.1     |
++-------------+----------------+
+| Node/Master | 10.233.0.1     |
++-------------+----------------+
+| Node/Master | 10.0.2.15      |
++-------------+----------------+
+| Node/Master | 10.0.2.8       |
++-------------+----------------+
+| Node/Master | 10.0.2.7       |
++-------------+----------------+
+| Node/Master | 10.0.2.6       |
++-------------+----------------+
+
+Detected Services
++----------------+----------------------+----------------------+
+| SERVICE        | LOCATION             | DESCRIPTION          |
++----------------+----------------------+----------------------+
+| Metrics Server | 10.233.6.42:443      | The Metrics server   |
+|                |                      | is in charge of      |
+|                |                      | providing resource   |
+|                |                      | usage metrics for    |
+|                |                      | pods and nodes to    |
+|                |                      | the API server       |
++----------------+----------------------+----------------------+
+| Kubelet API    | 169.254.25.10:10250  | The Kubelet is the   |
+|                |                      | main component in    |
+|                |                      | every Node, all pod  |
+|                |                      | operations goes      |
+|                |                      | through the kubelet  |
++----------------+----------------------+----------------------+
+| Kubelet API    | 10.233.112.128:10250 | The Kubelet is the   |
+|                |                      | main component in    |
+|                |                      | every Node, all pod  |
+|                |                      | operations goes      |
+|                |                      | through the kubelet  |
++----------------+----------------------+----------------------+
+| Kubelet API    | 10.0.2.8:10250       | The Kubelet is the   |
+|                |                      | main component in    |
+|                |                      | every Node, all pod  |
+|                |                      | operations goes      |
+|                |                      | through the kubelet  |
++----------------+----------------------+----------------------+
+| Kubelet API    | 10.0.2.7:10250       | The Kubelet is the   |
+|                |                      | main component in    |
+|                |                      | every Node, all pod  |
+|                |                      | operations goes      |
+|                |                      | through the kubelet  |
++----------------+----------------------+----------------------+
+| Kubelet API    | 10.0.2.6:10250       | The Kubelet is the   |
+|                |                      | main component in    |
+|                |                      | every Node, all pod  |
+|                |                      | operations goes      |
+|                |                      | through the kubelet  |
++----------------+----------------------+----------------------+
+| Kubelet API    | 10.0.2.15:10250      | The Kubelet is the   |
+|                |                      | main component in    |
+|                |                      | every Node, all pod  |
+|                |                      | operations goes      |
+|                |                      | through the kubelet  |
++----------------+----------------------+----------------------+
+| Etcd           | 10.0.2.15:2379       | Etcd is a DB that    |
+|                |                      | stores cluster's     |
+|                |                      | data, it contains    |
+|                |                      | configuration and    |
+|                |                      | current              |
+|                |                      |     state            |
+|                |                      | information, and     |
+|                |                      | might contain        |
+|                |                      | secrets              |
++----------------+----------------------+----------------------+
+| API Server     | 169.254.25.10:6443   | The API server is in |
+|                |                      | charge of all        |
+|                |                      | operations on the    |
+|                |                      | cluster.             |
++----------------+----------------------+----------------------+
+| API Server     | 10.233.112.128:6443  | The API server is in |
+|                |                      | charge of all        |
+|                |                      | operations on the    |
+|                |                      | cluster.             |
++----------------+----------------------+----------------------+
+| API Server     | 10.233.0.1:443       | The API server is in |
+|                |                      | charge of all        |
+|                |                      | operations on the    |
+|                |                      | cluster.             |
++----------------+----------------------+----------------------+
+| API Server     | 10.233.0.1:443       | The API server is in |
+|                |                      | charge of all        |
+|                |                      | operations on the    |
+|                |                      | cluster.             |
++----------------+----------------------+----------------------+
+| API Server     | 10.0.2.15:6443       | The API server is in |
+|                |                      | charge of all        |
+|                |                      | operations on the    |
+|                |                      | cluster.             |
++----------------+----------------------+----------------------+
+
+Vulnerabilities
+For further information about a vulnerability, search its ID in: 
+https://avd.aquasec.com/
++--------+---------------------+----------------------+----------------------+----------------------+----------+
+| ID     | LOCATION            | MITRE CATEGORY       | VULNERABILITY        | DESCRIPTION          | EVIDENCE |
++--------+---------------------+----------------------+----------------------+----------------------+----------+
+| KHV002 | 169.254.25.10:6443  | Initial Access //    | K8s Version          | The kubernetes       | v1.28.6  |
+|        |                     | Exposed sensitive    | Disclosure           | version could be     |          |
+|        |                     | interfaces           |                      | obtained from the    |          |
+|        |                     |                      |                      | /version endpoint    |          |
++--------+---------------------+----------------------+----------------------+----------------------+----------+
+| KHV002 | 10.233.112.128:6443 | Initial Access //    | K8s Version          | The kubernetes       | v1.28.6  |
+|        |                     | Exposed sensitive    | Disclosure           | version could be     |          |
+|        |                     | interfaces           |                      | obtained from the    |          |
+|        |                     |                      |                      | /version endpoint    |          |
++--------+---------------------+----------------------+----------------------+----------------------+----------+
+| KHV002 | 10.233.0.1:443      | Initial Access //    | K8s Version          | The kubernetes       | v1.28.6  |
+|        |                     | Exposed sensitive    | Disclosure           | version could be     |          |
+|        |                     | interfaces           |                      | obtained from the    |          |
+|        |                     |                      |                      | /version endpoint    |          |
++--------+---------------------+----------------------+----------------------+----------------------+----------+
+| KHV002 | 10.233.0.1:443      | Initial Access //    | K8s Version          | The kubernetes       | v1.28.6  |
+|        |                     | Exposed sensitive    | Disclosure           | version could be     |          |
+|        |                     | interfaces           |                      | obtained from the    |          |
+|        |                     |                      |                      | /version endpoint    |          |
++--------+---------------------+----------------------+----------------------+----------------------+----------+
+| KHV002 | 10.0.2.15:6443      | Initial Access //    | K8s Version          | The kubernetes       | v1.28.6  |
+|        |                     | Exposed sensitive    | Disclosure           | version could be     |          |
+|        |                     | interfaces           |                      | obtained from the    |          |
+|        |                     |                      |                      | /version endpoint    |          |
++--------+---------------------+----------------------+----------------------+----------------------+----------+
