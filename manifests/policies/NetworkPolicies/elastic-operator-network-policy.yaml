@@ -9,7 +9,7 @@ spec:
         - port: 53
           protocol: UDP
     - ports:
-        - port: 443
+        - port: 6443
           protocol: TCP
       to:
         - ipBlock:
@@ -33,4 +33,7 @@ spec:
           protocol: TCP
   podSelector:
     matchLabels:
-      control-plane: elastic-operator
+      app.kubernetes.io/name: elastic-operator
+  policyTypes:
+    - Ingress
+    - Egress

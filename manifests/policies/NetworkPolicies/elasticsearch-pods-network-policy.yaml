@@ -22,17 +22,13 @@ spec:
     - from:
         - namespaceSelector:
             matchLabels:
-              eck.k8s.elastic.co/operator-name: elastic-operator
+              kubernetes.io/metadata.name: elastic-system
           podSelector:
             matchLabels:
               control-plane: elastic-operator
         - namespaceSelector:
             matchLabels:
               kubernetes.io/metadata.name: default
-      # [Optional] Allow ingress controller pods from the ingress-nginx namespace.
-      #- namespaceSelector:
-      #    matchLabels:
-      #      name: ingress-nginx
       ports:
         - port: 9200
           protocol: TCP
@@ -45,6 +41,12 @@ spec:
               common.k8s.elastic.co/type: elasticsearch
       ports:
         - port: 9300
+          protocol: TCP
+    - from:
+        - ipBlock:
+            cidr: 10.0.2.0/24
+      ports:
+        - port: 9200
           protocol: TCP
   podSelector:
     matchLabels:
