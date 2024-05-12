@@ -60,7 +60,7 @@ spec:
                 name: falcosidekick
           env:
             - name: DEBUG
-              value: "false"
+              value: "true"
             - name: CUSTOMFIELDS
               value: ""
             - name: TEMPLATEDFIELDS
