@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: falcosidekick
+  namespace: falco
+  labels:
+    helm.sh/chart: falcosidekick-0.7.18
+    app.kubernetes.io/name: falcosidekick
+    app.kubernetes.io/instance: falcosidekick
+    app.kubernetes.io/version: "2.28.0"
+    app.kubernetes.io/part-of: falcosidekick
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: core
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: falcosidekick
+  namespace: falco
+  labels:
+    helm.sh/chart: falcosidekick-0.7.18
+    app.kubernetes.io/name: falcosidekick
+    app.kubernetes.io/instance: falcosidekick
+    app.kubernetes.io/version: "2.28.0"
+    app.kubernetes.io/part-of: falcosidekick
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: core
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - endpoints
+    verbs:
+      - get
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: falcosidekick
+  namespace: falco
+  labels:
+    helm.sh/chart: falcosidekick-0.7.18
+    app.kubernetes.io/name: falcosidekick
+    app.kubernetes.io/instance: falcosidekick
+    app.kubernetes.io/version: "2.28.0"
+    app.kubernetes.io/part-of: falcosidekick
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: core
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: falcosidekick
+subjects:
+  - kind: ServiceAccount
+    name: falcosidekick
+---
