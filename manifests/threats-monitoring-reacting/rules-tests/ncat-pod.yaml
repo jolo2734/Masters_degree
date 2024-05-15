@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nc-test
+  namespace: test
+spec:
+  containers:
+    - name: nc-test-container
+      image: 10.0.2.4:5000/nc-test
+      command: ["sh", "-c", "sleep infinity"]

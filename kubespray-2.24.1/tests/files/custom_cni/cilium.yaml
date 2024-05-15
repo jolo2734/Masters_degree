@@ -1052,5 +1052,5 @@ spec:
         configMap:
           name: cilium-config
 ---
-# Source: cilium/templates/cilium-secrets-namespace.yaml
+# Source: cilium/templates/cilium-secrets-namespace-argo.yaml
 # Only create the namespace if it's different from Ingress secret namespace or Ingress is not enabled.

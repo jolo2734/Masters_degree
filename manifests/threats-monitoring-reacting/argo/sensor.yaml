@@ -1,0 +1,41 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Sensor
+metadata:
+  name: critical-threat-sensor
+  namespace: argo-events
+spec:
+  dependencies:
+    - name: test-dep
+      eventSourceName: webhook-critical-threat
+      eventName: critical-threat
+  triggers:
+    - template:
+        name: webhook-trigger
+        k8s:
+          group: batch
+          version: v1
+          resource: jobs
+          operation: create
+          source:
+            resource:
+              apiVersion: batch/v1
+              kind: Job
+              metadata:
+                generateName: delete-pod-job-
+              spec:
+                template:
+                  spec:
+                    containers:
+                      - name: deleter
+                        image: alpine
+                        command: [sh, -c, "kubectl delete pod $POD_NAME --namespace $POD_NAMESPACE"]
+                    restartPolicy: Never
+          parameters:
+            - src:
+                dependencyName: test-dep
+                dataKey: body.podName
+              dest: spec.template.spec.containers[0].env[0].value
+            - src:
+                dependencyName: test-dep
+                dataKey: body.namespace
+              dest: spec.template.spec.containers[0].env[1].value
