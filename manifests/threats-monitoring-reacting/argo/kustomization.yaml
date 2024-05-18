@@ -8,4 +8,7 @@ resources:
   - argo-events.yaml
   - eventbus.yaml
   - eventSource.yaml
-  - sensor.yaml
+  - rbac-delete-pod-sensor.yaml
+  - rbac-wf-template-delete-pod.yaml
+  - wf-template-delete-pod.yaml
+  - sensor-netcat-rce.yaml
