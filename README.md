@@ -16,12 +16,10 @@ Everything apart from deploying VMS will be automated by ansible or by bash scri
 - [x] configure Pod Security Admission
 - [x] configure RBAC
 - [x] scan k8s cluster(misconfiguration - kube-bench, vulnerabilities - kube-hunter)
-- [ ] (optional)audit and harden hosts according to audit results [TODO]manual [DONE]automatic
-- [ ] prepare automation for cluster hardening
-- [ ] (optional)deploy hardened k8s cluster
-- [ ] prepare netowrk monitoring
-- [ ] prepare attacks at cluster
-- [x] prepare auto-defense mechanisms
+- [ ] harden cluster hosts according to best practices
+- [ ] prepare network monitoring
+- [ ] prepare attacks at cluster for other mechanism than Falco
+- [x] prepare auto-defense mechanisms based on Falco
 - [ ] compare k8s with other container orchestrator
 
 ### Deploy hosts
