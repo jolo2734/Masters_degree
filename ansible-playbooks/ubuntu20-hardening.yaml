@@ -3,7 +3,7 @@
   hosts: all
   become: yes
   vars:
-    ua_token: C142xkUTYshqWqn7S9LiwcJWfjrA2C
+    ua_token: <wpisz tutaj kod aktywacji ubuntu pro>
 
   tasks:
     - name: Update all packages
