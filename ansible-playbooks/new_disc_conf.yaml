@@ -1,0 +1,75 @@
+---
+- name: Configure and Encrypt a New Disk
+  hosts: kube_node
+  become: true
+  vars:
+    disk: "/dev/sdb"
+    partition: "{{ disk }}1"
+    mount_point: "/mnt/encrypted"
+    volume_name: "encrypted_vol"
+    keyfile_path: "/root/mykeyfile"
+
+  tasks:
+    - name: Install required packages
+      ansible.builtin.package:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - parted
+        - cryptsetup
+
+    - name: Create a new primary partition
+      community.general.parted:
+        device: "{{ disk }}"
+        number: 1
+        state: present
+        part_start: 1MiB
+        part_end: 100%
+        flags: [ lvm ]
+
+    - name: Generate a secure key file locally and read it
+      local_action:
+        module: shell
+        cmd: "dd if=/dev/urandom bs=512 count=4 | base64"
+      register: generated_key
+      run_once: true
+      check_mode: no
+
+    - name: Set key content fact
+      set_fact:
+        key_content: "{{ generated_key.stdout }}"
+
+    - name: Initialize LUKS on the new partition using key content
+      shell: |
+        echo "{{ key_content }}" | base64 --decode | cryptsetup luksFormat --key-file=- "{{ partition }}"
+
+    - name: Open LUKS partition using key content
+      shell: |
+        echo "{{ key_content }}" | base64 --decode | cryptsetup open --key-file=- "{{ partition }}" "{{ volume_name }}"
+
+    - name: Create a filesystem on the LUKS device
+      ansible.builtin.filesystem:
+        fstype: ext4
+        dev: "/dev/mapper/{{ volume_name }}"
+
+    - name: Ensure mount point exists
+      ansible.builtin.file:
+        path: "{{ mount_point }}"
+        state: directory
+
+    - name: Mount the filesystem
+      ansible.builtin.mount:
+        path: "{{ mount_point }}"
+        src: "/dev/mapper/{{ volume_name }}"
+        fstype: ext4
+        state: mounted
+        opts: defaults
+
+    - name: Update fstab to mount on boot
+      ansible.builtin.mount:
+        path: "{{ mount_point }}"
+        src: "/dev/mapper/{{ volume_name }}"
+        fstype: ext4
+        state: present
+        opts: "defaults"
+
