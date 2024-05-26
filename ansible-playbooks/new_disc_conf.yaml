@@ -72,4 +72,3 @@
         fstype: ext4
         state: present
         opts: "defaults"
-
