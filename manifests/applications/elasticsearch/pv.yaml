@@ -44,3 +44,50 @@ spec:
               operator: In
               values:
                 - mgr-k8s-worker-02
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: worker-01-elasticsearch-master-backup
+  labels:
+    type: shared
+spec:
+  storageClassName: backup-storage-elasticsearch-master
+  capacity:
+    storage: 50Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/nfs_backup_share/Elasticsearch"
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - mgr-k8s-worker-01
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: worker-02-elasticsearch-data-backup
+  labels:
+    type: shared
+spec:
+  storageClassName: backup-storage-elasticsearch-data
+  capacity:
+    storage: 50Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/nfs_backup_share/Elasticsearch"
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - mgr-k8s-worker-02
