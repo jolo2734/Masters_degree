@@ -1,0 +1,36 @@
+---
+- name: Configure NFS Client
+  hosts: kube_node
+  become: true
+  vars:
+    nfs_server_ip: '10.0.2.4'
+    nfs_share: '/mnt/nfs_backup_share'
+    mount_point: '/nfs_backup_share'
+
+  tasks:
+    - name: Install NFS client packages
+      ansible.builtin.package:
+        name: nfs-common
+        state: present
+
+    - name: Create a mount point for the NFS share
+      ansible.builtin.file:
+        path: "{{ mount_point }}"
+        state: directory
+        mode: '0755'
+
+    - name: Mount the NFS share
+      ansible.builtin.mount:
+        path: "{{ mount_point }}"
+        src: "{{ nfs_server_ip }}:{{ nfs_share }}"
+        fstype: nfs
+        opts: defaults
+        state: mounted
+
+    - name: Ensure the NFS share is mounted on boot
+      ansible.builtin.lineinfile:
+        path: /etc/fstab
+        line: "{{ nfs_server_ip }}:{{ nfs_share }} {{ mount_point }} nfs defaults 0 0"
+        create: yes
+        state: present
+
