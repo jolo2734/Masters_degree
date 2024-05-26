@@ -1,0 +1,13 @@
+apiVersion: security.istio.io/v1
+kind: PeerAuthentication
+metadata:
+  name: permissive-authn-for-browser-communication
+  namespace: default
+spec:
+  mtls:
+    mode: PERMISSIVE
+  selector:
+    matchLabels:
+      application: spilo
+      cluster-name: db-postgresql
+      team: acid
