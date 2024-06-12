@@ -1,41 +1,44 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Sensor
 metadata:
-  name: critical-threat-sensor
+  name: delete-netcat-rce-container
   namespace: argo-events
 spec:
+  template:
+    serviceAccountName: sensor-delete-pod-sa
   dependencies:
-    - name: test-dep
+    - name: falco-event
       eventSourceName: webhook-critical-threat
       eventName: critical-threat
+      filters:
+        data:
+          - path: body.rule
+            type: string
+            value:
+              - "Netcat runs inside container that allows remote code execution"
   triggers:
     - template:
-        name: webhook-trigger
-        k8s:
-          group: batch
-          version: v1
-          resource: jobs
-          operation: create
-          source:
-            resource:
-              apiVersion: batch/v1
-              kind: Job
-              metadata:
-                generateName: delete-pod-job-
-              spec:
-                template:
-                  spec:
-                    containers:
-                      - name: deleter
-                        image: alpine
-                        command: [sh, -c, "kubectl delete pod $POD_NAME --namespace $POD_NAMESPACE"]
-                    restartPolicy: Never
+        name: delete-pod-trigger
+        argoWorkflow:
+          group: argoproj.io
+          version: v1alpha1
+          resource: workflows
+          operation: submit
           parameters:
             - src:
-                dependencyName: test-dep
-                dataKey: body.podName
-              dest: spec.template.spec.containers[0].env[0].value
-            - src:
-                dependencyName: test-dep
-                dataKey: body.namespace
-              dest: spec.template.spec.containers[0].env[1].value
+                dependencyName: falco-event
+              dest: spec.arguments.parameters.0.value
+          source:
+            resource:
+              apiVersion: argoproj.io/v1alpha1
+              kind: Workflow
+              metadata:
+                generateName: delete-pod-
+                namespace: argo
+              spec:
+                workflowTemplateRef:
+                  name: delete-pod-template
+                arguments:
+                  parameters:
+                    - name: falco-event
+                      value: {}
