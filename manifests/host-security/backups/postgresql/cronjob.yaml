@@ -9,7 +9,6 @@ spec:
     spec:
       template:
         spec:
-          serviceAccountName: postgres-backup-cronjob-sa 
           containers:
           - name: postgres-backup
             image: 10.0.2.4:5000/postgres-backup:v1.1
