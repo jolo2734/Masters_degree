@@ -73,7 +73,7 @@ For Falco
  - unknown binary drop and executed on container
 
 For Other mechanism
- - ?
+ - described in Masters document
 
 ### Auto-defense mechanisms
  Falco -> Falco Sidekick ->:
