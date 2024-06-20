@@ -85,4 +85,4 @@ ModSecurity in MGINX Ingress Controller
 
 ## TODO
 ### Cluster hardening
-Hardening of Kubernetes cluster is done in compliance with CIS standards, which are ensured during creating cluster by Kubespray [with this additional options](https://github.com/kubernetes-sigs/kubespray/blob/v2.24.1/docs/hardening.md).
+Hardening of Kubernetes  in compliance with CIS standards, which are ensured during creating cluster by Kubespray [with this additional options](https://github.com/kubernetes-sigs/kubespray/blob/v2.24.1/docs/hardening.md).
